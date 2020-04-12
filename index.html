@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivananda Alva</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+</head>
+<body style=" background: rgb(255, 217, 0);">
+   <br>
+ 
+   <div class="text-center">
+   <button  type="button" id="start" class="btn btn-success">Start</button>
+<button  type="button" id="end" class="btn btn-danger">End</button>
+
+<button type="button" id="clear" class="btn btn-secondary">Clear</button>
+<br>
+<br>
+<button type="button"  id="linear" class="btn btn-info">Linear Search</button>
+
+<button type="button"  id="diagonal" class="btn btn-info">Diagonal Search</button>
+</div>  
+<br>
+   <br>
+   <div class="text-center">
+    <canvas id="canvas" width="481px" height="481px" style="background: #fff;magrin:20px;"></canvas>
+ </div>
+    <script type="text/javascript" language="javascript">
+  var bw = 480;
+    var bh = 480;
+    var p = 0;
+   var cw = 40
+       var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    
+function drawBoard(){
+  
+        for (var x = 0; x <= bw; x += cw) {
+            context.moveTo(0.5 + x + p, p);
+            context.lineTo(0.5 + x + p, bh + p);
+        }
+
+        for (var x = 0; x <= bh; x += cw) {
+            context.moveTo(p, 0.5 + x + p);
+            context.lineTo(bw + p, 0.5 + x + p);
+        }
+
+        context.strokeStyle = "red";
+        context.stroke();
+    }
+
+    drawBoard();
+
+
+
+
+
+
+    
+function getCursorPosition(canvas, event, cw) {
+    
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    const cy = (y + (cw - y%cw))/cw
+    const cx = (x + (cw - x%cw))/cw
+    //console.log("x: " + cx + " y: " + )
+
+    document.getElementById("start").onclick = function start() {
+     console.log("start function")
+       var context2 = canvas.getContext("2d");
+       context2.beginPath();
+       context2.fillStyle = "green";
+          context2.fillRect(0, 0, 1*cw, 1*cw);       
+    }
+
+
+document.getElementById("end").onclick = function end() {
+     console.log("end function")
+    
+   var context2 = canvas.getContext("2d");
+       context2.beginPath();
+       context2.fillStyle = "red";
+       for(i=0;i<cx;i++){
+  for(j=0;j<cy;j++){     
+    context2.fillRect((cx-1)*cw ,(cy-1)*cw , 1*cw, 1*cw);
+  }
+}        
+}
+      
+    
+
+
+document.getElementById("clear").onclick= function clear(){
+  
+    var context2 = canvas.getContext("2d");
+   
+
+context2.clearRect(0, 0, canvas.width, canvas.height);
+context2.beginPath();
+drawBoard();
+
+}
+
+
+document.getElementById("linear").onclick= function linear(){
+  var context3 = canvas.getContext("2d");
+       context3.beginPath();
+       var i,j;
+
+ 
+top:for(i=1;i<=12;i++){
+  for(j=1;j<=12;j++){
+    context3.fillStyle = "#1569C7";
+context3.fillRect((j-1)*cw ,(i-1)*cw , 1*cw, 1*cw);
+    console.log("i="+ i + " " +"j=" + j);
+    if((i==cy) && (j==cx)){
+alert("found at x: " + cx + " y: " + cy,(cx*40) - 40,cy,(cy*40) -40);
+break top;
+}
+}
+}
+}
+
+
+
+
+
+
+
+
+
+
+document.getElementById("diagonal").onclick= function find(){
+  var context3 = canvas.getContext("2d");
+       context3.beginPath();
+       var i,j;
+
+  for(i=0;i<cx;i++){
+    context3.fillStyle = "#1569C7";
+       context3.fillRect(i*cw ,i*cw , 1*cw, 1*cw);       
+    console.log("i="+ i);
+  }
+
+}
+
+
+
+
+
+}
+
+
+canvas.addEventListener('mousedown', function(e) {
+    getCursorPosition(canvas, e, cw)
+})
+    </script>
+
+
+
+
+
+</style>
+</body>
+</html>
